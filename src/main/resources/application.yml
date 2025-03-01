@@ -1,0 +1,45 @@
+spring:
+  ai:
+    vectorstore:
+      pgvector:
+        index-type: HNSW
+        distance-type: COSINE_DISTANCE
+        dimensions: 1024
+        batching-strategy: TOKEN_COUNT # Optional: Controls how documents are batched for embedding
+        max-document-batch-size: 10000 # Optional: Maximum number of documents per batch
+    ollama:
+      chat:
+        model: llama3.3
+        #model: llama3.1
+        #model: llama3
+        #model: deepseek-r1
+        #model: phi3
+        #model: wizardlm2:7b
+        embedding:
+          model: mxbai-embed-large
+        init:
+          pull-model-strategy: when_missing
+
+  application:
+    name: vector-store-db
+
+
+docker:
+  compose:
+    lifecycle-management: start_only
+
+
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/mydatabase
+    username: myuser
+    password: secret
+    driver-class-name: org.postgresql.Driver
+
+
+application:
+  aiapp:
+    docToLoadDb: classpath:/towvehicles.txt,https://yamahaoutboards.com/outboards/350-150-hp/in-line-4/f150-(i4)/pb_spt_open_212_f150xb_9-10-2020-occ,https://yamahaoutboards.com/outboards/350-150-hp/v6-4-2l/f300-(4-2l)/pb_spt_open-232_f300xsb2_6-29-2023_occ,https://yamahaoutboards.com/outboards/xto-offshore/v8-5-6l/xf425/pb_spt_open-322_tw_lxf425usb2_8-26-2021_occ,https://yamahaoutboards.com/outboards/xto-offshore/v8-5-6l/xf425/pb_sct_380lxf_tr_xf425_8-30-2018_occ
+
+
+
