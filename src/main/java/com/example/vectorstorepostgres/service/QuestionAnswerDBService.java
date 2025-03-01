@@ -59,8 +59,12 @@ public class QuestionAnswerDBService {
         log.info("===================================================");
         log.info("===================================================");
         log.info("===================================================");
+        // calculate time taken to answer
+        long startTime = System.currentTimeMillis();
         ChatResponse response = chatModel.call(new Prompt(List.of(systemMessage, userMessage)));
-
+        long endTime = System.currentTimeMillis();
+        long timeTaken = endTime - startTime;
+        log.info("--------> Time taken to answer: {} ms", timeTaken);
 
         String answer = response.getResult().getOutput().getText();
         log.info("answer: {}", answer);
