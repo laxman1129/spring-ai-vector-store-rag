@@ -32,7 +32,6 @@ public class QuestionAnswerDBService {
     private Resource systemMessageTemplate;
 
     public Answer getAnswerForQuestion(Question question) {
-
         PromptTemplate systemMessagePromptTemplate = new SystemPromptTemplate(systemMessageTemplate);
         Message systemMessage = systemMessagePromptTemplate.createMessage();
 
@@ -61,10 +60,12 @@ public class QuestionAnswerDBService {
         log.info("===================================================");
         // calculate time taken to answer
         long startTime = System.currentTimeMillis();
-        ChatResponse response = chatModel.call(new Prompt(List.of(systemMessage, userMessage)));
+        ChatResponse response = chatModel
+                .call(new Prompt(List.of(systemMessage, userMessage)));
         long endTime = System.currentTimeMillis();
         long timeTaken = endTime - startTime;
-        log.info("--------> Time taken to answer: {} ms", timeTaken);
+        // to seconds
+        log.info("--------> Time taken to answer: {} seconds", timeTaken / 1000);
 
         String answer = response.getResult().getOutput().getText();
         log.info("answer: {}", answer);
